@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import subway.domain.Station;
-import subway.domain.StationRepository;
-
 public class InputView {
 	public static String getMainCommend(Scanner sc) {
 		System.out.println("## 메인 화면");

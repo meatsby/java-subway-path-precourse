@@ -15,11 +15,16 @@ import subway.domain.StationRepository;
 
 public class SubwayMap {
 	private final List<String> lines = new ArrayList<>(Arrays.asList("2호선", "3호선", "신분당선"));
-	private final List<String> stations = new ArrayList<>(Arrays.asList("교대역", "강남역", "역삼역", "남부터미널역", "양재역", "매봉역", "양재시민의숲역", "선릉역", "한티역"));
-	private final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
-	private final WeightedMultigraph<String, DefaultWeightedEdge> timeGraph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
-	private final DijkstraShortestPath<String, DefaultWeightedEdge> dijkstraShortestPath = new DijkstraShortestPath<>(distanceGraph);
-	private final DijkstraShortestPath<String, DefaultWeightedEdge> dijkstraShortestTime = new DijkstraShortestPath<>(timeGraph);
+	private final List<String> stations = new ArrayList<>(
+		Arrays.asList("교대역", "강남역", "역삼역", "남부터미널역", "양재역", "매봉역", "양재시민의숲역", "선릉역", "한티역"));
+	private final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = new WeightedMultigraph<>(
+		DefaultWeightedEdge.class);
+	private final WeightedMultigraph<String, DefaultWeightedEdge> timeGraph = new WeightedMultigraph<>(
+		DefaultWeightedEdge.class);
+	private final DijkstraShortestPath<String, DefaultWeightedEdge> dijkstraShortestPath = new DijkstraShortestPath<>(
+		distanceGraph);
+	private final DijkstraShortestPath<String, DefaultWeightedEdge> dijkstraShortestTime = new DijkstraShortestPath<>(
+		timeGraph);
 
 	public SubwayMap() {
 		initializeStations();
@@ -72,7 +77,8 @@ public class SubwayMap {
 	}
 
 	public List<String> findShortestDistance(List<String> stationNames) {
-		if (!distanceGraph.containsVertex(stationNames.get((0))) || !distanceGraph.containsVertex(stationNames.get((1)))) {
+		if (!distanceGraph.containsVertex(stationNames.get((0))) || !distanceGraph.containsVertex(
+			stationNames.get((1)))) {
 			throw new IllegalArgumentException("[ERROR] 해당역이 존재하지 않습니다.");
 		}
 		try {
@@ -110,7 +116,7 @@ public class SubwayMap {
 	public int findDistanceValue(List<String> path) {
 		int distance = 0;
 		for (int i = 0; i < path.size() - 1; i++) {
-			distance += (int)distanceGraph.getEdgeWeight(distanceGraph.getEdge(path.get(i), path.get(i+1)));
+			distance += (int)distanceGraph.getEdgeWeight(distanceGraph.getEdge(path.get(i), path.get(i + 1)));
 		}
 		return distance;
 	}
@@ -118,7 +124,7 @@ public class SubwayMap {
 	public int findTimeValue(List<String> path) {
 		int time = 0;
 		for (int i = 0; i < path.size() - 1; i++) {
-			time += (int)timeGraph.getEdgeWeight(timeGraph.getEdge(path.get(i), path.get(i+1)));
+			time += (int)timeGraph.getEdgeWeight(timeGraph.getEdge(path.get(i), path.get(i + 1)));
 		}
 		return time;
 	}

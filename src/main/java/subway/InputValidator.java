@@ -2,9 +2,6 @@ package subway;
 
 import java.util.List;
 
-import subway.domain.Station;
-import subway.domain.StationRepository;
-
 public class InputValidator {
 	public static void isValidMainCommend(String mainCommend) {
 		if (!(mainCommend.equals("1") || mainCommend.equals("Q"))) {
