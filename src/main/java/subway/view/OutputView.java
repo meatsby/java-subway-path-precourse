@@ -29,4 +29,8 @@ public class OutputView {
 		}
 		System.out.println();
 	}
+
+	public static void showError(String message) {
+		System.out.println(message);
+	}
 }
