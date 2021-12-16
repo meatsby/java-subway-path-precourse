@@ -16,4 +16,17 @@ public class OutputView {
 		System.out.println("2. 최소 시간");
 		System.out.println("B. 돌아가기");
 	}
+
+	public static void showPath(List<String> path, List<Integer> pathInfo) {
+		System.out.println();
+		System.out.println("## 조회 결과");
+		System.out.println("[INFO] ---");
+		System.out.printf("[INFO] 총 거리: %dkm%n", pathInfo.get(0));
+		System.out.printf("[INFO] 총 소요 시간: %d분%n", pathInfo.get(1));
+		System.out.println("[INFO] ---");
+		for (String stationName : path) {
+			System.out.printf("[INFO] %s%n", stationName);
+		}
+		System.out.println();
+	}
 }
