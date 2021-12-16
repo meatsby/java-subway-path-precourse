@@ -35,17 +35,29 @@ public class SubwayPathController {
 	}
 
 	private void searchShortestPath(SubwayMap subwayMap) {
-		List<String> stationNames = getStationNames();
-		List<String> shortestPath = subwayMap.searchShortestPath(stationNames);
-		List<Integer> pathInfo = subwayMap.getPathInfo(shortestPath);
-		OutputView.showPath(shortestPath, pathInfo);
+		try {
+			List<String> stationNames = InputView.stationNames();
+			InputValidator.isValidStationNames(subwayMap, stationNames);
+			List<String> shortestPath = subwayMap.searchShortestPath(stationNames);
+			List<Integer> pathInfo = subwayMap.getPathInfo(shortestPath);
+			OutputView.showPath(shortestPath, pathInfo);
+		} catch (IllegalArgumentException e) {
+			OutputView.showError(e.getMessage());
+			operatePathSearch(subwayMap);
+		}
 	}
 
 	private void searchFastestPath(SubwayMap subwayMap) {
-		List<String> stationNames = getStationNames();
-		List<String> fastestPath = subwayMap.searchFastestPath(stationNames);
-		List<Integer> pathInfo = subwayMap.getPathInfo(fastestPath);
-		OutputView.showPath(fastestPath, pathInfo);
+		try {
+			List<String> stationNames = InputView.stationNames();
+			InputValidator.isValidStationNames(subwayMap, stationNames);
+			List<String> fastestPath = subwayMap.searchFastestPath(stationNames);
+			List<Integer> pathInfo = subwayMap.getPathInfo(fastestPath);
+			OutputView.showPath(fastestPath, pathInfo);
+		} catch (IllegalArgumentException e) {
+			OutputView.showError(e.getMessage());
+			operatePathSearch(subwayMap);
+		}
 	}
 
 	private String getMainCommend() {
@@ -67,17 +79,6 @@ public class SubwayPathController {
 		} catch (IllegalArgumentException e) {
 			OutputView.showError(e.getMessage());
 			return getMenuCommend();
-		}
-	}
-
-	private List<String> getStationNames() {
-		List<String> stationNames = InputView.stationNames();
-		try {
-			InputValidator.isValidStationNames(stationNames);
-			return stationNames;
-		} catch (IllegalArgumentException e) {
-			OutputView.showError(e.getMessage());
-			return getStationNames();
 		}
 	}
 }
