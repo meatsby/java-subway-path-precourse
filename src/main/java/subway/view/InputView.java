@@ -1,5 +1,7 @@
 package subway.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -11,15 +13,16 @@ public class InputView {
 		return sc.nextLine();
 	}
 
-	public static String departure() {
+	public static List<String> stationNames() {
+		List<String> stationNames = new ArrayList<>();
+
 		System.out.println();
 		System.out.println("## 출발역을 입력하세요.");
-		return sc.nextLine();
-	}
-
-	public static String arrival() {
+		stationNames.add(sc.nextLine());
 		System.out.println();
 		System.out.println("## 도착역을 입력하세요.");
-		return sc.nextLine();
+		stationNames.add(sc.nextLine());
+
+		return stationNames;
 	}
 }
