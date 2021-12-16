@@ -1,18 +1,10 @@
 package subway;
 
-import java.util.Scanner;
-
 import subway.util.InputValidator;
 import subway.view.InputView;
 import subway.view.OutputView;
 
 public class SubwayPathController {
-	private final Scanner sc;
-
-	public SubwayPathController(Scanner sc) {
-		this.sc = sc;
-	}
-
 	public void run() {
 		while (true) {
 			OutputView.mainPage();
@@ -62,7 +54,7 @@ public class SubwayPathController {
 	private void searchShortestPath() {
 		String departure = InputView.departure();
 		String arrival = InputView.arrival();
-		subwayMap.getShortestPath();
+		subwayMap.getShortestPath(departure, arrival);
 		OutputView.showPath();
 	}
 
