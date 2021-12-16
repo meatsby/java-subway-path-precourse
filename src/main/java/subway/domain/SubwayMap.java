@@ -50,4 +50,29 @@ public class SubwayMap {
 			}
 		}
 	}
+
+	public List<String> searchShortestPath(List<String> stationNames) {
+		DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(distanceGraph);
+		List<String> shortestPath = dijkstraShortestPath.getPath(stationNames.get(0), stationNames.get(1))
+			.getVertexList();
+		return shortestPath;
+	}
+
+	public List<String> searchFastestPath(List<String> stationNames) {
+		DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(timeGraph);
+		List<String> fastestPath = dijkstraShortestPath.getPath(stationNames.get(0), stationNames.get(1))
+			.getVertexList();
+		return fastestPath;
+	}
+
+	public List<Integer> getPathInfo(List<String> shortestPath) {
+		int distance = 0;
+		int time = 0;
+		for (int i = 0; i < shortestPath.size() - 1; i++) {
+			distance += distanceGraph.getEdgeWeight(
+				distanceGraph.getEdge(shortestPath.get(i), shortestPath.get(i + 1)));
+			time += timeGraph.getEdgeWeight(timeGraph.getEdge(shortestPath.get(i), shortestPath.get(i + 1)));
+		}
+		return Arrays.asList(distance, time);
+	}
 }
