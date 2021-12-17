@@ -8,16 +8,21 @@ import subway.view.InputView;
 import subway.view.OutputView;
 
 public class SubwayPathController {
+	private static final String SEARCH_PATH = "1";
+	private static final String TERMINATION = "Q";
+	private static final String SEARCH_BY_DISTANCE = "1";
+	private static final String SEARCH_BY_TIME = "2";
+
 	public void run() {
 		SubwayMap subwayMap = new SubwayMap();
 
 		while (true) {
 			OutputView.mainPage();
 			String mainCommend = getMainCommend();
-			if (mainCommend.equals("1")) {
+			if (mainCommend.equals(SEARCH_PATH)) {
 				operatePathSearch(subwayMap);
 			}
-			if (mainCommend.equals("Q")) {
+			if (mainCommend.equals(TERMINATION)) {
 				return;
 			}
 		}
@@ -26,10 +31,10 @@ public class SubwayPathController {
 	private void operatePathSearch(SubwayMap subwayMap) {
 		OutputView.menuPage();
 		String menuCommend = getMenuCommend();
-		if (menuCommend.equals("1")) {
+		if (menuCommend.equals(SEARCH_BY_DISTANCE)) {
 			searchShortestPath(subwayMap);
 		}
-		if (menuCommend.equals("2")) {
+		if (menuCommend.equals(SEARCH_BY_TIME)) {
 			searchFastestPath(subwayMap);
 		}
 	}

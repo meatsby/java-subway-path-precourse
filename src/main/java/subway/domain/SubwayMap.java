@@ -8,6 +8,12 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
 
 public class SubwayMap {
+	private static final int NEXT_STATION = 1;
+	private static final int DEPARTURE = 0;
+	private static final int ARRIVAL = 1;
+	private static final String ERROR = "[ERROR] ";
+	private static final String CONNECTION_ERROR = "출발역과 도착역이 연결되어 있지 않습니다.";
+
 	private final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = new WeightedMultigraph(
 		DefaultWeightedEdge.class);
 	private final WeightedMultigraph<String, DefaultWeightedEdge> timeGraph = new WeightedMultigraph(
@@ -46,10 +52,10 @@ public class SubwayMap {
 		for (int i = 0; i < distanceList.size(); i++) {
 			for (int j = 0; j < distanceList.get(i).size(); j++) {
 				distanceGraph.setEdgeWeight(
-					distanceGraph.addEdge(lineStationList.get(i).get(j), lineStationList.get(i).get(j + 1)),
+					distanceGraph.addEdge(lineStationList.get(i).get(j), lineStationList.get(i).get(j + NEXT_STATION)),
 					distanceList.get(i).get(j));
 				timeGraph.setEdgeWeight(
-					timeGraph.addEdge(lineStationList.get(i).get(j), lineStationList.get(i).get(j + 1)),
+					timeGraph.addEdge(lineStationList.get(i).get(j), lineStationList.get(i).get(j + NEXT_STATION)),
 					timeList.get(i).get(j));
 			}
 		}
@@ -58,18 +64,18 @@ public class SubwayMap {
 	public List<String> searchShortestPath(List<String> stationNames) {
 		DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(distanceGraph);
 		try {
-			return dijkstraShortestPath.getPath(stationNames.get(0), stationNames.get(1)).getVertexList();
+			return dijkstraShortestPath.getPath(stationNames.get(DEPARTURE), stationNames.get(ARRIVAL)).getVertexList();
 		} catch (Exception e) {
-			throw new IllegalArgumentException("[ERROR] 출발역과 도착역이 연결되어 있지 않습니다.");
+			throw new IllegalArgumentException(ERROR + CONNECTION_ERROR);
 		}
 	}
 
 	public List<String> searchFastestPath(List<String> stationNames) {
 		DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(timeGraph);
 		try {
-			return dijkstraShortestPath.getPath(stationNames.get(0), stationNames.get(1)).getVertexList();
+			return dijkstraShortestPath.getPath(stationNames.get(DEPARTURE), stationNames.get(ARRIVAL)).getVertexList();
 		} catch (Exception e) {
-			throw new IllegalArgumentException("[ERROR] 출발역과 도착역이 연결되어 있지 않습니다.");
+			throw new IllegalArgumentException(ERROR + CONNECTION_ERROR);
 		}
 	}
 
@@ -77,9 +83,8 @@ public class SubwayMap {
 		int distance = 0;
 		int time = 0;
 		for (int i = 0; i < shortestPath.size() - 1; i++) {
-			distance += distanceGraph.getEdgeWeight(
-				distanceGraph.getEdge(shortestPath.get(i), shortestPath.get(i + 1)));
-			time += timeGraph.getEdgeWeight(timeGraph.getEdge(shortestPath.get(i), shortestPath.get(i + 1)));
+			distance += distanceGraph.getEdgeWeight(distanceGraph.getEdge(shortestPath.get(i), shortestPath.get(i + NEXT_STATION)));
+			time += timeGraph.getEdgeWeight(timeGraph.getEdge(shortestPath.get(i), shortestPath.get(i + NEXT_STATION)));
 		}
 		return Arrays.asList(distance, time);
 	}
